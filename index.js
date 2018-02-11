@@ -157,7 +157,15 @@ class S3Deploy {
     // TODO make this a separate method
     let results = info.gatheredData.info;
 
-    let deployed = results.functions.find((fn) => fn.name === cfg.LambdaFunctionArn);
+    // let deployed = results.functions.find((fn) => fn.name === cfg.LambdaFunctionArn);
+    // console.log("cfg = " + JSON.stringify(cfg, null, 2));
+    // console.log("results.functions = " + JSON.stringify(results.functions, null, 2));
+    // console.log("service.getAllFunctionsNames = " + this.serverless.service.getAllFunctionsNames());
+    let deployed = this.serverless.service.getAllFunctionsNames().find((fn) => fn === cfg.LambdaFunctionArn);
+    deployed = {
+      name: deployed,
+      deployedName: deployed
+    };
 
     if (!deployed) {
       throw new Error("It looks like the function has not yet been deployed. You must use 'sls deploy' before doing 'sls s3deploy.");
